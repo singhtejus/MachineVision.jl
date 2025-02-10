@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate("/Users/singh/Documents/GitHub/tests.jl")
+Pkg.activate(".")
 using Statistics
 using CairoMakie
 using CairoMakie.GeometryBasics
