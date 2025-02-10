@@ -16,7 +16,7 @@ using TiffImages
 # Load Image and convert to grayscale
 
 ````julia
-img = TiffImages.load("image3.tiff");
+img = TiffImages.load("MD/image3.tiff");
 img = Float64.(Gray.(img))*255
 
 rows   = size(img, 1)
