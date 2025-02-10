@@ -1,6 +1,7 @@
 # # Imports
 using Pkg
-Pkg.activate(".")
+Pkg.activate(".");
+
 using Plots
 using TiffImages
 
