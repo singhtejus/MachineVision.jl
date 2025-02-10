@@ -7,31 +7,29 @@ using TiffImages
 
 # # Load Image and convert to grayscale
 img = TiffImages.load("MD/image3.tiff");
-img = Float64.(Gray.(img))*255
+img = Float64.(Gray.(img))*255;
 
-rows   = size(img, 1)
-cols   = size(img, 2)
-n      = rows * cols           # total number of pixels 
-
+rows   = size(img, 1);
+cols   = size(img, 2);
 
 # # Gray Scale Image Input
 p1 = Plots.heatmap(reverse(img, dims=1))
 
 # # Edge Detection
-#= 
-    The Sobel operator is applied for edge detection.
-=#
 
-ximage = zeros(rows,cols)
-yimage = zeros(rows,cols)
-simage = zeros(rows,cols)
-bimage = zeros(rows,cols)
+# The Sobel operator is applied for edge detection.
 
 
-maxim = zeros(Float32,3)
-maxim[1] = 0
-maxim[1] = 0
-maxim[2] = 0
+ximage = zeros(rows,cols);
+yimage = zeros(rows,cols);
+simage = zeros(rows,cols);
+bimage = zeros(rows,cols);
+
+
+maxim = zeros(Float32,3);
+maxim[1] = 0;
+maxim[1] = 0;
+maxim[2] = 0;
 # Calculate sobel mask for ∂E/∂x and ∂E/∂y & calculate the square gradient magnitude (edge strength)
 
 for i in 2:rows-1
@@ -58,7 +56,7 @@ yimage .= yimage .* (255 / maxim[2])
 simage .= simage .* (255 / maxim[3])
 Plots.heatmap(reverse(simage, dims = 1))
 
-# Create Binary Image of edge map
+# Create binary image of edge map
 for i in 1:rows
     for j in 1:cols
         if simage[i, j] > 45
