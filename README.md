@@ -4,11 +4,11 @@
 
 ## Projects in This Repository
 
-### 🔹 [EdgeDetection.jl](#)  
+### 🔹 [EdgeDetection.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/EdgeDetection.md)  
 A Sobel-based edge detection implementation.  
 🔗 **Read more:** [EdgeDetection.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/EdgeDetection.md)
 
-### 🔹 [Projections.jl](#)  
+### 🔹 [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)  
 Description of your second project. This could be another machine vision task, such as object detection or feature extraction.  
 🔗 **Learn more:** [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)
 
