@@ -1,6 +1,6 @@
 # ⚓️ MachineVision.jl
 
-<img src="https://github.com/singhtejus/MachineVision.jl/blob/main/MD/Cover.png?raw=true">
+<img src="">
 
 **MachineVision.jl** is a Julia package that showcases the fundamental image processing techniques, including edge detection and other vision-related algorithms.
 
