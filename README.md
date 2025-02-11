@@ -12,7 +12,7 @@ A Sobel-based edge detection implementation.
 🔗 **Read more:** [EdgeDetection.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/EdgeDetection.md)
 
 ### 🔹 [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)  
-Description of your second project. This could be another machine vision task, such as object detection or feature extraction.  
+Orthographic and Perspective projections visualized.
 🔗 **Learn more:** [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)
 
 ---
