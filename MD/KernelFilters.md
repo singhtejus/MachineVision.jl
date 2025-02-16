@@ -1,3 +1,8 @@
+# Kernel filters and 2D Convolution is demonstrated here.
+2D Convolution is an extension of 1D Convolution. It allows a kernel to be convoluted with a 2D image to apply various effects.
+In this example, basic Gaussian blur kernels are used to soften the image.
+Then the use case is extended to edge detection to see the effects of preprocessing an image with kernel smoothing
+
 # Imports
 
 ````julia
@@ -6,16 +11,11 @@ using TiffImages
 ````
 
 # 2D Convolution
-
-````julia
-#=
-2D Convolution is an extension of 1D Convolution. It allows a kernel to be convoluted with a 2D image to apply various effects.
 This is a computationally inefficient implementation of 2D Convolution but it is useful for demonstrating the concept.
 A faster method would be to use the FFT method.
-
 The image is padded such that the output image is the same size as the input image.
-=#
 
+````julia
 function Conv2D(A,B)
     imrows, imcols = size(A)
     krows, kcols = size(B)
@@ -43,7 +43,7 @@ end
 Conv2D (generic function with 1 method)
 ````
 
-# Example Image
+# Example image
 
 ````julia
 img = [
@@ -61,7 +61,7 @@ img = [
 
 p1 = heatmap(reverse(img, dims=1), aspect_ratio=1, color=:grays)
 ````
-![](KernelFilters-6.svg)
+![](KernelFilters-7.svg)
 
 # Apply a Gaussian blur kernel to soften the image
 
@@ -73,25 +73,16 @@ kernel = [
 ]
 
 blurredimg = Conv2D(img,kernel);
-````
-
-# Result
-
-````julia
 p2 = heatmap(reverse(blurredimg, dims=1), aspect_ratio=1, color=:grays)
 ````
-![](KernelFilters-10.svg)
+![](KernelFilters-9.svg)
 
 # Now Applying to a real image
 
 ````julia
 img2 = TiffImages.load("MD/image3.tiff");
 img2 = Float64.(Gray.(img2))*255;
-````
 
-# Input Image and Blurred Image
-
-````julia
 l = @layout [a b]
 p3 = Plots.plot(
     Plots.heatmap(reverse(img2, dims=1), aspect_ratio=1, color=:grays),
@@ -100,7 +91,9 @@ p3 = Plots.plot(
     size=(1200, 440)
 )
 ````
-![](KernelFilters-14.svg)
+![](KernelFilters-11.svg)
+
+The blur is subtle because the kernel only smooths an area of 3x3 pixels. A bigger kernel leads to a more pronounced blur.
 
 # Combine this with Edge Detection
 
@@ -122,9 +115,9 @@ p4 = Plots.plot(
     size=(1200, 440)
 )
 ````
-![](KernelFilters-18.svg)
+![](KernelFilters-16.svg)
 
-# Now let's try with a bigger kernel for a larger blur
+# Testing the effects of a bigger kernel for a more blur
 
 ````julia
 kernel5x5 = [
@@ -138,7 +131,7 @@ kernel5x5 = [
 simage_smoothed2 = CalcSobelGradients(Conv2D(img2,kernel5x5))[3];
 ````
 
-# Edge Detection with a larger kernel looks much better
+# Edge Detection after applying a larger blur kernel looks much better
 
 ````julia
 p5 = Plots.plot(
@@ -148,10 +141,10 @@ p5 = Plots.plot(
     size=(1200, 440)
 )
 ````
-![](KernelFilters-22.svg)
+![](KernelFilters-20.svg)
 
 # Comparing The Binary Thresholded Images
-The threshold value for the smoothed image can be set higher than for the vanilla image because the contrast in the smoothed sgm image is higher.
+The threshold value for the smoothed image can be set higher than for the vanilla image because the contrast in the smoothed SGM image is higher.
 
 ````julia
 threshold_value1, threshold_value2 = 50, 65;
@@ -161,6 +154,7 @@ bimage_smoothed = ifelse.(simage_smoothed2 .> threshold_value2, 255, 0);
 ````
 
 # Edge Detected, Thresholded Image Versus Smoothed, Edge Detected, Thresholded Image
+There is much less noise in the smoothed image.
 
 ````julia
 p6 = Plots.plot(
@@ -170,5 +164,5 @@ p6 = Plots.plot(
     size=(1200, 440)
 )
 ````
-![](KernelFilters-26.svg)
+![](KernelFilters-24.svg)
 
