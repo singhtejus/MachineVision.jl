@@ -1,4 +1,4 @@
-# # Kernel filters and 2D Convolution is demonstrated here.
+# # Kernel filters and 2D Convolution are demonstrated here.
 # 2D Convolution is an extension of 1D Convolution. It allows a kernel to be convoluted with a 2D image to apply various effects.
 # In this example, basic Gaussian blur kernels are used to soften the image.
 # Then the use case is extended to edge detection to see the effects of preprocessing an image with kernel smoothing.
