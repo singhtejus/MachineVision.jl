@@ -56,7 +56,7 @@ kernel = [
     1/16  2/16  1/16
 ]
 
-blurredimg = Conv2D(img,kernel)
+blurredimg = Conv2D(img,kernel);
 
 # # Result
 p2 = heatmap(reverse(blurredimg, dims=1), aspect_ratio=1, color=:grays)
@@ -71,14 +71,14 @@ p3 = Plots.plot(
     Plots.heatmap(reverse(img2, dims=1), aspect_ratio=1, color=:grays),
     Plots.heatmap(reverse(Conv2D(Conv2D(img2,kernel), kernel),dims=1), aspect_ratio=1, color=:grays),
     layout = l,
-    size=(1600, 600)
+    size=(1200, 440)
 )
 
 # # Combine this with Edge Detection
 include("SobelMask.jl")
 
-simage_vanilla = CalcSobelGradients(img2)[3]
-simage_smoothed = CalcSobelGradients(Conv2D(img2,kernel))[3]
+simage_vanilla = CalcSobelGradients(img2)[3];
+simage_smoothed = CalcSobelGradients(Conv2D(img2,kernel))[3];
 
 # # Regular and Smoothed Edge Detection
 #=
@@ -89,7 +89,7 @@ p4 = Plots.plot(
     Plots.heatmap(reverse(simage_vanilla, dims=1), aspect_ratio=1, color=:grays),
     Plots.heatmap(reverse(simage_smoothed, dims=1), aspect_ratio=1, color=:grays),
     layout = l,
-    size=(1600, 600)
+    size=(1200, 440)
 )
 
 # # Now let's try with a bigger kernel for a larger blur
@@ -101,14 +101,14 @@ kernel5x5 = [
     1  4  6  4  1
 ] ./ 256
 
-simage_smoothed2 = CalcSobelGradients(Conv2D(img2,kernel5x5))[3]
+simage_smoothed2 = CalcSobelGradients(Conv2D(img2,kernel5x5))[3];
 
 # # Edge Detection with a larger kernel looks much better
 p5 = Plots.plot(
     Plots.heatmap(reverse(simage_vanilla, dims=1), aspect_ratio=1, color=:grays),
     Plots.heatmap(reverse(simage_smoothed2, dims=1), aspect_ratio=1, color=:grays),
     layout = l,
-    size=(1600, 600)
+    size=(1200, 440)
 )
 
 # # Comparing The Binary Thresholded Images
@@ -116,17 +116,17 @@ p5 = Plots.plot(
 The threshold value for the smoothed image can be set higher than for the vanilla image because the contrast in the smoothed sgm image is higher.
 =#
 
-threshold_value1, threshold_value2 = 50, 65
+threshold_value1, threshold_value2 = 50, 65;
 
-bimage_vanilla = ifelse.(simage_vanilla .> threshold_value1, 255, 0)
-bimage_smoothed = ifelse.(simage_smoothed2 .> threshold_value2, 255, 0)
+bimage_vanilla = ifelse.(simage_vanilla .> threshold_value1, 255, 0);
+bimage_smoothed = ifelse.(simage_smoothed2 .> threshold_value2, 255, 0);
 
 # # Edge Detected, Thresholded Image Versus Smoothed, Edge Detected, Thresholded Image
 p6 = Plots.plot(
     Plots.heatmap(reverse(bimage_vanilla, dims=1), aspect_ratio=1, color=:grays),
     Plots.heatmap(reverse(bimage_smoothed, dims=1), aspect_ratio=1, color=:grays),
     layout = l,
-    size=(1600, 600)
+    size=(1200, 440)
 )
 
 
