@@ -11,6 +11,10 @@
 A Sobel-based edge detection implementation.  
 🔗 **Read more:** [EdgeDetection.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/EdgeDetection.md)
 
+### 🔹 [KernelFilters.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/KernelFilters.md)
+Implementation of kernels and 2D Convolution. Builds on the utility of Edge Detection.
+🔗 **Read more:** [KernelFilters.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/KernelFilters.md)
+
 ### 🔹 [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)  
 Orthographic and Perspective projections visualized.    
 🔗 **Learn more:** [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)
