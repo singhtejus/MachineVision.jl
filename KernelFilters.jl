@@ -1,7 +1,7 @@
 # # Kernel filters and 2D Convolution is demonstrated here.
 # 2D Convolution is an extension of 1D Convolution. It allows a kernel to be convoluted with a 2D image to apply various effects.
 # In this example, basic Gaussian blur kernels are used to soften the image.
-# Then the use case is extended to edge detection to see the effects of preprocessing an image with kernel smoothing
+# Then the use case is extended to edge detection to see the effects of preprocessing an image with kernel smoothing.
 
 # # Imports
 using Plots
@@ -35,7 +35,7 @@ function Conv2D(A,B)
     return output
 end
 
-# # Example image
+# # Example Image
 img = [
     50  50  50  50  50  50  50  50  50  50;
     50  50  50  50  50  50  50  50  50  50;
@@ -51,7 +51,7 @@ img = [
 
 p1 = heatmap(reverse(img, dims=1), aspect_ratio=1, color=:grays)
 
-# # Apply a Gaussian blur kernel to soften the image 
+# # Apply a Gaussian blur kernel to soften the image
 kernel = [
     1/16  2/16  1/16;
     2/16  4/16  2/16;
@@ -61,7 +61,7 @@ kernel = [
 blurredimg = Conv2D(img,kernel);
 p2 = heatmap(reverse(blurredimg, dims=1), aspect_ratio=1, color=:grays)
 
-# # Now Applying to a real image
+# # Now apply it to a real image
 img2 = TiffImages.load("MD/image3.tiff");
 img2 = Float64.(Gray.(img2))*255;
 
@@ -80,10 +80,8 @@ include("SobelMask.jl")
 simage_vanilla = CalcSobelGradients(img2)[3];
 simage_smoothed = CalcSobelGradients(Conv2D(img2,kernel))[3];
 
-# # Regular and Smoothed Edge Detection
-#=
-There is a slight improvement in the edge detection when the image is smoothed first.
-=#
+# # Regular versus Smoothed Edge Detection
+# There is a slight improvement in the edge detection when the image is smoothed first.
 
 p4 = Plots.plot(
     Plots.heatmap(reverse(simage_vanilla, dims=1), aspect_ratio=1, color=:grays),
@@ -92,7 +90,7 @@ p4 = Plots.plot(
     size=(1200, 440)
 )
 
-# # Testing the effects of a bigger kernel for a more blur
+# # Bigger kernel for more blur
 kernel5x5 = [
     1  4  6  4  1;
     4 16 24 16  4;
