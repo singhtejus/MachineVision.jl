@@ -28,8 +28,8 @@ bimage = zeros(rows,cols);
 
 maxim = zeros(Float32,3);
 maxim[1] = 0;
-maxim[1] = 0;
 maxim[2] = 0;
+maxim[3] = 0;
 # Calculate sobel mask for ∂E/∂x and ∂E/∂y & calculate the square gradient magnitude (edge strength)
 
 for i in 2:rows-1

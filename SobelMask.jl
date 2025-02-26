@@ -8,8 +8,8 @@ function CalcSobelGradients(img::Array)
 
     maxim = zeros(Float32,3);
     maxim[1] = 0;
-    maxim[1] = 0;
     maxim[2] = 0;
+    maxim[3] = 0;
     for i in 2:rows-1
         for j in 2:cols-1
             

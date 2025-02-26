@@ -1,8 +1,16 @@
+# # Imports
 using Pkg
 Pkg.activate(".")
 using Statistics
 using CairoMakie
 using CairoMakie.GeometryBasics
+using GLMakie
+using Plots
+using LinearAlgebra
+
+# # Perspective and Orthoginal Projection functions
+# Perspective Projection: x' = x * (z'/z), y' = y * (z'/z)
+# Orthogonal Projection: x' = x, y' = y
 
 function PerspectiveProj(A::Matrix, z_prime::Float64)
     A = vcat(A, ones(1, size(A, 2)))
@@ -19,49 +27,46 @@ function OrthogonalProj(A::Matrix)
     A = vcat(A, ones(1, size(A, 2)))
 
     P = zeros(3, size(A, 1))
-    P[1,1], P[2,2] = 1.0, 1.0  # Keep x and y, set z = 0
+    P[1,1], P[2,2] = 1.0, 1.0  
 
     A_prime = P * A
-    # Return only the projected x and y coordinates
     return A_prime[1:2, :]
 end
 
+# # Other useful functions
+# PlotPolygon: Plots a polygon given its vertices
+    # Compute the centroid, Calculates angles of each point relative to the centroid, Sort indices based on angles in descending order for clockwise, Reorder points based on sorted indices.
+
+# ReorderPointsClockwise: Reorders the points of a polygon in clockwise order (required for ShoelaceArea())
+    # Compute the centroid, Calculates angles of each point relative to the centroid, Sort indices based on angles in descending order for clockwise.
+
+    # ShoelaceArea: Calculates the area of a polygon using the shoelace formula
+
 function PlotPolygon(points::Matrix{T}) where T <: Real
-    # Compute the centroid
-    center = mean(points, dims=2)
     
-    # Calculate angles of each point relative to the centroid
+    center = mean(points, dims=2)
     angles = atan.(points[2, :] .- center[2], points[1, :] .- center[1])
     
-    # Sort indices based on angles in descending order for clockwise
     sorted_indices = sortperm(angles, rev=true)
     reorderedpoints = points[:, sorted_indices]
     x, y = reorderedpoints[1, :], reordered_points[2, :]
-    # Reorder points based on sorted indices
     poly(x, y)
 end
 
 function ReorderPointsClockwise(points::Matrix{T}) where T <: Real
-    # Compute the centroid
-    center = mean(points, dims=2)
     
-    # Calculate angles of each point relative to the centroid
+    center = mean(points, dims=2)
     angles = atan.(points[2, :] .- center[2], points[1, :] .- center[1])
     
-    # Sort indices based on angles in descending order for clockwise
     sorted_indices = sortperm(angles, rev=true)
     return points[:, sorted_indices]
 end
 
 function ShoelaceArea(points::Matrix)
 
-    # Compute the centroid
     center = mean(points, dims=2)
-    
-    # Calculate angles of each point relative to the centroid
     angles = atan.(points[2, :] .- center[2], points[1, :] .- center[1])
-    
-    # Sort indices based on angles in descending order for clockwise
+
     sorted_indices = sortperm(angles, rev=true)
     reorderedpoints = points[:, sorted_indices]
 
@@ -75,10 +80,7 @@ function ShoelaceArea(points::Matrix)
     return area
 end
     
-
-
-
-
+# # Example
 points = [3 3 3 3; 1 4 1 4; -1 -1 -2 -2]
 z_prime = 1.0
 
@@ -91,13 +93,87 @@ x_orth, y_orth = points_orth_proj[1, :], points_orth_proj[2, :]
 area = ShoelaceArea(points_pers_proj)
 
 PlotPolygon(points_pers_proj)
+using Plots
+Plots.plot(x_pers, y_pers)
 
-plot(x_pers, y_pers)
+Makie.scatter(x_orth, y_orth)
 
-scatter(x_orth, y_orth)
+##################################
+function generate_sphere_points(n_theta=30, n_phi=30; r=1.0)
+    # Generate spherical coordinates
+    theta = range(0, π, length=n_theta)
+    phi = range(0, 2π, length=n_phi)
+    
+    # Convert to Cartesian coordinates
+    x = r * sin.(theta) * cos.(phi)'
+    y = r * sin.(theta) * sin.(phi)'
+    z = r * cos.(theta) * ones(1, n_phi) .+0.5
+    
+    # Combine into 3×N matrix
+    return vcat(vec(x)', vec(y)', vec(z)')
+end
+points = generate_sphere_points(80, 80; r=0.3)
+points_proj = copy(points)
+points_proj[3, :] .= 0  # Set z-coordinates to zero
 
-poly(x_pers, y_pers)
+p = scatter3d(
+    points[1, :], points[2, :], points[3, :],
+    markersize=1.5,
+    markerstrokewidth=0,
+    label="Original Sphere",
+    aspect_ratio= :,
+    xlims=(-1.1, 1.1),
+    ylims=(-1.1, 1.1),
+    zlims=(-0.5, 1.1),
+    camera=(30, 20),
+    title="Sphere and XY-Projection",
+    xlabel="X", ylabel="Y", zlabel="Z",
+    color=:blue,
+    size=(1200, 800)
+)
 
+scatter3d!(
+    p,  # Explicitly specify we're adding to plot 'p'
+    points_proj[1, :], points_proj[2, :], points_proj[3, :],
+    markersize=1.5,
+    markerstrokewidth=0,
+    label="XY-Projection",
+    color=:red
+)
+
+display(p)
+
+
+
+
+
+for i in 10:2:90
+    p = scatter3d(
+    points[1, :], points[2, :], points[3, :],
+    markersize=1.5,
+    markerstrokewidth=0,
+    label="Original Sphere",
+    aspect_ratio=:equal,
+    xlims=(-2.1, 2.1),
+    ylims=(-2.1, 2.1),
+    zlims=(-2.1, 2.1),
+    camera=(40, i),
+    title="Sphere and XY-Projection",
+    xlabel="X", ylabel="Y", zlabel="Z",
+    color=:blue,
+    size=(1200, 800)
+)
+scatter3d!(
+    p,  # Explicitly specify we're adding to plot 'p'
+    points_proj[1, :], points_proj[2, :], points_proj[3, :],
+    markersize=1.5,
+    markerstrokewidth=0,
+    label="XY-Projection",
+    color=:red
+)
+display(p)
+sleep(0.05)
+end
 
 fig = Figure()
 ax = Axis3(fig[1, 1], title="3D Projection to Image Plane", xlabel="X", ylabel="Y", zlabel="Z")
