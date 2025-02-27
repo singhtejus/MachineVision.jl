@@ -15,6 +15,10 @@ A Sobel-based edge detection implementation.
 Implementation of kernels and 2D convolution. Builds on the utility of edge detection.  
 🔗 **Read more:** [KernelFilters.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/KernelFilters.md)
 
+### 🔹 [HoughTransform.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/HoughTransform.md)  
+The Hough Transform is used to extract straight lines from an image.
+🔗 **Learn more:** [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/MD/HoughTransform.md)
+
 ### 🔹 [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)  
 Orthographic and Perspective projections visualized.    
 🔗 **Learn more:** [Projections.jl](https://github.com/singhtejus/MachineVision.jl/blob/main/projections.jl)
