@@ -182,8 +182,8 @@ end
 lines_dark = copy(img);
 for r in 1:rows
     for c in 1:cols
-        if reconstructed[r,c] == 0x96
-            lines_dark[r,c] = 100
+        if reconstructed[r,c] != 0
+            lines_dark[r,c] = 150
         end
     end
 end
