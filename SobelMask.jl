@@ -35,3 +35,7 @@ function CalcSobelGradients(img::Array)
 
     return ximage, yimage, simage
 end
+
+function Threshold(img::Array, threshold_value::Int)
+    return ifelse.(img .> threshold_value, 255, 0)
+end

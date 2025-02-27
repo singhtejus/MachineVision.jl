@@ -2,7 +2,7 @@ using Literate
 
 cd(@__DIR__)
 
-Literate.markdown("KernelFilters.jl";
+Literate.markdown("HoughTransform.jl";
     credit=false,
     execute=true,
     flavor=Literate.CommonMarkFlavor(),
